@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "grpctunnel"
+version = "0.1.0"
+description = ""
+authors = ["Monotosh Das <monotosh.das@videonetics.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.7"
+grpcio = "^1.59.3"
+google-api-python-client = "^2.109.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.3"
+grpcio-tools = "^1.59.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

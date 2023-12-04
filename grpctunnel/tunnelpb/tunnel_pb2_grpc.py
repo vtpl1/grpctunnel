@@ -43,15 +43,15 @@ class TunnelServiceStub(object):
             channel: A grpc.Channel.
         """
         self.OpenTunnel = channel.stream_stream(
-                '/grpctunnel.v1.TunnelService/OpenTunnel',
-                request_serializer=tunnel__pb2.ClientToServer.SerializeToString,
-                response_deserializer=tunnel__pb2.ServerToClient.FromString,
-                )
+            "/grpctunnel.v1.TunnelService/OpenTunnel",
+            request_serializer=tunnel__pb2.ClientToServer.SerializeToString,
+            response_deserializer=tunnel__pb2.ServerToClient.FromString,
+        )
         self.OpenReverseTunnel = channel.stream_stream(
-                '/grpctunnel.v1.TunnelService/OpenReverseTunnel',
-                request_serializer=tunnel__pb2.ServerToClient.SerializeToString,
-                response_deserializer=tunnel__pb2.ClientToServer.FromString,
-                )
+            "/grpctunnel.v1.TunnelService/OpenReverseTunnel",
+            request_serializer=tunnel__pb2.ServerToClient.SerializeToString,
+            response_deserializer=tunnel__pb2.ClientToServer.FromString,
+        )
 
 
 class TunnelServiceServicer(object):
@@ -95,8 +95,8 @@ class TunnelServiceServicer(object):
         consistency.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def OpenReverseTunnel(self, request_iterator, context):
         """OpenReverseTunnel creates a "reverse" channel, which allows the server to
@@ -106,29 +106,30 @@ class TunnelServiceServicer(object):
         replies to them and sends responses.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_TunnelServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'OpenTunnel': grpc.stream_stream_rpc_method_handler(
-                    servicer.OpenTunnel,
-                    request_deserializer=tunnel__pb2.ClientToServer.FromString,
-                    response_serializer=tunnel__pb2.ServerToClient.SerializeToString,
-            ),
-            'OpenReverseTunnel': grpc.stream_stream_rpc_method_handler(
-                    servicer.OpenReverseTunnel,
-                    request_deserializer=tunnel__pb2.ServerToClient.FromString,
-                    response_serializer=tunnel__pb2.ClientToServer.SerializeToString,
-            ),
+        "OpenTunnel": grpc.stream_stream_rpc_method_handler(
+            servicer.OpenTunnel,
+            request_deserializer=tunnel__pb2.ClientToServer.FromString,
+            response_serializer=tunnel__pb2.ServerToClient.SerializeToString,
+        ),
+        "OpenReverseTunnel": grpc.stream_stream_rpc_method_handler(
+            servicer.OpenReverseTunnel,
+            request_deserializer=tunnel__pb2.ServerToClient.FromString,
+            response_serializer=tunnel__pb2.ClientToServer.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'grpctunnel.v1.TunnelService', rpc_method_handlers)
+        "grpctunnel.v1.TunnelService", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class TunnelService(object):
     """A gRPC service which can tunnel gRPC traffic from the client to the server or
     even the server to the client. A "tunnel" is a gRPC stream which presents
@@ -161,35 +162,59 @@ class TunnelService(object):
     """
 
     @staticmethod
-    def OpenTunnel(request_iterator,
+    def OpenTunnel(
+        request_iterator,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.stream_stream(
+            request_iterator,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.stream_stream(request_iterator, target, '/grpctunnel.v1.TunnelService/OpenTunnel',
+            "/grpctunnel.v1.TunnelService/OpenTunnel",
             tunnel__pb2.ClientToServer.SerializeToString,
             tunnel__pb2.ServerToClient.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def OpenReverseTunnel(request_iterator,
+    def OpenReverseTunnel(
+        request_iterator,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        insecure=False,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.stream_stream(
+            request_iterator,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.stream_stream(request_iterator, target, '/grpctunnel.v1.TunnelService/OpenReverseTunnel',
+            "/grpctunnel.v1.TunnelService/OpenReverseTunnel",
             tunnel__pb2.ServerToClient.SerializeToString,
             tunnel__pb2.ClientToServer.FromString,
-            options, channel_credentials,
-            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )

@@ -6,9 +6,9 @@ proto_files = ["protos/grpctunnel/v1/tunnel.proto"]
 for proto_file in proto_files:
     protoc.main(
         (
+            "",
             "--proto_path=./third_party/googleapis/",
             "--proto_path=./protos/grpctunnel/v1",
-            "--proto_path=.",
             "--python_out=./grpctunnel/tunnelpb",
             "--pyi_out=./grpctunnel/tunnelpb",
             "--grpc_python_out=./grpctunnel/tunnelpb",

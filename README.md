@@ -7,3 +7,4 @@ git submodule update --init
 
 python -m grpc_tools.protoc -I./protos/grpctunnel/v1 -I./third_party/googleapis --python_out=./grpctunnel/tunnelpb --pyi_out=./grpctunnel/tunnelpb --grpc_python_out=./grpctunnel/tunnelpb ./protos/grpctunnel/v1/tunnel.proto
 
+python -m grpc_tools.protoc -I./protos/grpctunnel/v1 -I./third_party/googleapis --python_out=./grpctunnel/tunnelpb --pyi_out=./grpctunnel/tunnelpb --grpc_python_out=./grpctunnel/tunnelpb ./protos/grpctunnel/v1/route_guide.proto

@@ -1,6 +1,6 @@
 from .options import tunnelOpts
 from .tunnel_client import TunnelChannel
-from threading import Thread, Lock
+from threading import Lock
 
 grpctunnelNegotiateKey = "grpctunnel-negotiate"
 grpctunnelNegotiateVal = "on"

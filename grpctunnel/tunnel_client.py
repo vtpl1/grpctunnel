@@ -1,4 +1,3 @@
-import grpc
 from grpctunnel.options import TunnelOption, tunnelOpts
 from tunnelpb import tunnel_pb2_grpc
 from tunnelpb import tunnel_pb2 as tunnelpb
@@ -68,6 +67,7 @@ class PendingChannel:
     ) -> None:
         for opt in opts:
             opt.apply()
+
 
 def NewChannel(stub: tunnel_pb2_grpc.TunnelServiceStub) -> PendingChannel:
     return (PendingChannel(stub), 0)

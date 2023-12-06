@@ -104,3 +104,15 @@ class Metadata(_message.Message):
     MD_FIELD_NUMBER: _ClassVar[int]
     md: _containers.MessageMap[str, Metadata.Values]
     def __init__(self, md: _Optional[_Mapping[str, Metadata.Values]] = ...) -> None: ...
+
+class Ping(_message.Message):
+    __slots__ = ["id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    def __init__(self, id: _Optional[int] = ...) -> None: ...
+
+class Pong(_message.Message):
+    __slots__ = ["id"]
+    ID_FIELD_NUMBER: _ClassVar[int]
+    id: int
+    def __init__(self, id: _Optional[int] = ...) -> None: ...

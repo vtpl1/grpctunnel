@@ -1,5 +1,5 @@
 import asyncio
-from typing import AsyncIterable, Iterable, List
+from typing import AsyncIterable
 from loguru import logger
 import grpc
 from grpctunnel.tunnelpb import tunnel_pb2_grpc, tunnel_pb2
@@ -12,10 +12,11 @@ class TunnelServiceServicer(tunnel_pb2_grpc.TunnelServiceServicer):
     async def OpenTunnel(
         self, request_iterator: AsyncIterable[tunnel_pb2.ClientToServer], unused_context
     ):
+        logger.info("OpenTunnel")
         # return_iterator: AsyncIterable[tunnel_pb2.ServerToClient] = []
         return_val: tunnel_pb2.ServerToClient
         async for client_to_server in request_iterator:
-            return_val = tunnel_pb2.ServerToClient(client_to_server.stream_id)
+            return_val = tunnel_pb2.ServerToClient(stream_id=client_to_server.stream_id)
             yield return_val
 
     async def OpenReverseTunnel(
@@ -25,6 +26,12 @@ class TunnelServiceServicer(tunnel_pb2_grpc.TunnelServiceServicer):
         async for client_to_server in request_iterator:
             return_val = tunnel_pb2.ClientToServer(client_to_server.stream_id)
             yield return_val
+
+    async def PingPong(
+        self, request: tunnel_pb2.Ping, unused_context
+    ) -> tunnel_pb2.Pong:
+        ret = tunnel_pb2.Pong(id=request.id + 15)
+        return ret
 
 
 async def serve() -> None:

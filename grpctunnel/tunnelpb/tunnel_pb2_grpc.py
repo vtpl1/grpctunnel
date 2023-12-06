@@ -52,6 +52,11 @@ class TunnelServiceStub(object):
                 request_serializer=tunnel__pb2.ServerToClient.SerializeToString,
                 response_deserializer=tunnel__pb2.ClientToServer.FromString,
                 )
+        self.PingPong = channel.unary_unary(
+                '/grpctunnel.v1.TunnelService/PingPong',
+                request_serializer=tunnel__pb2.Ping.SerializeToString,
+                response_deserializer=tunnel__pb2.Pong.FromString,
+                )
 
 
 class TunnelServiceServicer(object):
@@ -109,6 +114,12 @@ class TunnelServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def PingPong(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_TunnelServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -121,6 +132,11 @@ def add_TunnelServiceServicer_to_server(servicer, server):
                     servicer.OpenReverseTunnel,
                     request_deserializer=tunnel__pb2.ServerToClient.FromString,
                     response_serializer=tunnel__pb2.ClientToServer.SerializeToString,
+            ),
+            'PingPong': grpc.unary_unary_rpc_method_handler(
+                    servicer.PingPong,
+                    request_deserializer=tunnel__pb2.Ping.FromString,
+                    response_serializer=tunnel__pb2.Pong.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -191,5 +207,22 @@ class TunnelService(object):
         return grpc.experimental.stream_stream(request_iterator, target, '/grpctunnel.v1.TunnelService/OpenReverseTunnel',
             tunnel__pb2.ServerToClient.SerializeToString,
             tunnel__pb2.ClientToServer.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def PingPong(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/grpctunnel.v1.TunnelService/PingPong',
+            tunnel__pb2.Ping.SerializeToString,
+            tunnel__pb2.Pong.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

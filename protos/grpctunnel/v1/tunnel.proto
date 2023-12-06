@@ -50,6 +50,8 @@ service TunnelService {
     // reversed: the server initiates RPCs and sends requests and the client
     // replies to them and sends responses.
     rpc OpenReverseTunnel(stream ServerToClient) returns (stream ClientToServer);
+
+    rpc PingPong(Ping) returns (Pong);
 }
 
 // ClientToServer is the message a client sends to a server.
@@ -232,4 +234,12 @@ enum ProtocolRevision {
     // It will be used in the future to distinguish between this protocol revision
     // and later protocol revisions.
     REVISION_ONE = 1;
+}
+
+message Ping {
+    uint32 id = 1;   
+}
+
+message Pong {
+    uint32 id = 1;   
 }
